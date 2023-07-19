@@ -1,6 +1,6 @@
 // Timer functionality
 let timerInterval;
-let timerSeconds = 1500; // 25 minutes in seconds
+let timerSeconds = 25 * 60; // 25 minutes in seconds
 let isTimerRunning = false;
 
 function startTimer() {
