@@ -22,6 +22,21 @@ function resetTimer() {
   updateTimerDisplay();
 }
 
+function showNotification () {
+  if(Notification.permission === 'granted'){
+    new Notification('Pomodoro Timer', {
+      body: 'The timer has ended✔️'
+    })
+  }
+  else if(Notification.permission === 'denied'){
+    Notification.requestPermission().then( function (permission){
+      if(Notification.permission === 'granted'){
+        showNotification()
+      }
+    })
+  }
+}
+
 function updateTimer() {
   if (timerSeconds > 0) {
     timerSeconds--;
@@ -30,7 +45,7 @@ function updateTimer() {
   } else {
     clearInterval(timerInterval);
     isTimerRunning = false;
-    // Play sound notification or perform any other action when the timer ends
+    showNotification();
   }
 }
 
@@ -41,6 +56,10 @@ function updateTimerDisplay() {
     .toString()
     .padStart(2, "0")}`;
   document.querySelector(".timer").textContent = formattedTime;
+}
+
+if(Notification.permission !== 'granted'){
+  Notification.requestPermission();
 }
 
 function updateProgressBar() {
